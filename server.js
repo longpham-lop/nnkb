@@ -10,15 +10,17 @@ import db from "./src/config/db.js";
 import categoryRoutes from "./src/router/categoryRoutes.js";
 import locationRoutes from "./src/router/locationRoutes.js";
 import eventRoutes from "./src/router/eventRoutes.js";
+import morgan from "morgan";
 
 dotenv.config();
 const app = express();
-
+app.use(morgan("dev"));
 app.use(express.json());
 
 app.use('/api', uploadRoute);
 //user
 app.use("/api", userRoute);
+//etc...
 app.use("/api/categories", categoryRoutes);
 app.use("/api/locations", locationRoutes);
 app.use("/api/events", eventRoutes);
