@@ -10,6 +10,7 @@ import db from "./src/config/db.js";
 import categoryRoutes from "./src/router/categoryRoutes.js";
 import locationRoutes from "./src/router/locationRoutes.js";
 import eventRoutes from "./src/router/eventRoutes.js";
+import ticketRoutes from "./src/router/ticketRoutes.js";
 import morgan from "morgan";
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use("/api", userRoute);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/locations", locationRoutes);
 app.use("/api/events", eventRoutes);
+app.use("/api/tickets", ticketRoutes);
 //goggle
 app.use(
   session({

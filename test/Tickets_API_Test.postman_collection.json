@@ -1,0 +1,106 @@
+{
+  "info": {
+    "name": "Tickets API Test",
+    "_postman_id": "b6f7a7c2-8e6f-4e42-9339-8db8b789e567",
+    "description": "Test CRUD API cho bảng tickets (ve) trong Express",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Lấy tất cả vé",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/tickets",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "tickets"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Tạo vé mới",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"event_id\": 1, \"name\": \"Vé VIP\", \"price\": 500000, \"quantity\": 100, \"sale_start\": \"2025-10-20T00:00:00Z\", \"sale_end\": \"2025-10-30T00:00:00Z\", \"seat_type\": \"Ghế ngồi\"}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/tickets",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "tickets"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Cập nhật vé",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"price\": 600000, \"quantity\": 120}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/tickets/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "tickets",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Xóa vé",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/tickets/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "tickets",
+            "1"
+          ]
+        }
+      }
+    }
+  ]
+}
