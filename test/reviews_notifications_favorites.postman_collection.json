@@ -1,0 +1,105 @@
+{
+  "info": {
+    "name": "Reviews, Notifications, Favorites API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Get All Reviews",
+          "request": { "method": "GET", "url": "http://localhost:5000/api/reviews" }
+        },
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_id\": 1,\n  \"user_id\": 1,\n  \"rating\": 5,\n  \"comment\": \"Sự kiện tuyệt vời!\"\n}"
+            },
+            "url": "http://localhost:5000/api/reviews"
+          }
+        },
+        {
+          "name": "Update Review",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"rating\": 4, \"comment\": \"Đổi ý một chút!\" }" },
+            "url": "http://localhost:5000/api/reviews/1"
+          }
+        },
+        {
+          "name": "Delete Review",
+          "request": { "method": "DELETE", "url": "http://localhost:5000/api/reviews/1" }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "Get Notifications",
+          "request": { "method": "GET", "url": "http://localhost:5000/api/notifications" }
+        },
+        {
+          "name": "Create Notification",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"title\": \"Đơn hàng mới\",\n  \"message\": \"Bạn vừa đặt thành công vé sự kiện.\"\n}"
+            },
+            "url": "http://localhost:5000/api/notifications"
+          }
+        },
+        {
+          "name": "Mark as Read",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:5000/api/notifications/1/read"
+          }
+        },
+        {
+          "name": "Delete Notification",
+          "request": { "method": "DELETE", "url": "http://localhost:5000/api/notifications/1" }
+        }
+      ]
+    },
+    {
+      "name": "Favorites",
+      "item": [
+        {
+          "name": "Get User Favorites",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:5000/api/favorites/1"
+          }
+        },
+        {
+          "name": "Add Favorite",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"event_id\": 2\n}"
+            },
+            "url": "http://localhost:5000/api/favorites"
+          }
+        },
+        {
+          "name": "Delete Favorite",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:5000/api/favorites/1"
+          }
+        }
+      ]
+    }
+  ]
+}

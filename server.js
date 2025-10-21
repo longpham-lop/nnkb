@@ -7,6 +7,13 @@ import authRoutes from "./src/router/auth.js";
 import uploadRoute from './src/router/uploadRoute.js';
 import userRoute from "./src/router/userRoute.js";
 import db from "./src/config/db.js";
+
+import http from "http";
+import { Server } from "socket.io";
+import cors from "cors";
+import bodyParser from "body-parser";
+
+
 import categoryRoutes from "./src/router/categoryRoutes.js";
 import locationRoutes from "./src/router/locationRoutes.js";
 import eventRoutes from "./src/router/eventRoutes.js";
@@ -15,10 +22,36 @@ import orderRoutes from "./src/router/orderRoutes.js";
 import paymentRoutes from "./src/router/paymentRoutes.js";
 import orderItemRoutes from "./src/router/orderItemRoutes.js";
 import transactionRoutes from "./src/router/transactionRoutes.js";
+import RNF from "./src/router/R_N_F.js"
 import morgan from "morgan";
+
+
+
 
 dotenv.config();
 const app = express();
+const server = http.createServer(app);
+
+// Kích hoạt Socket.IO
+const io = new Server(server, {
+  cors: { origin: "*" },
+});
+app.use(cors());
+io.on("connection", (socket) => {
+  console.log("Client connected:", socket.id);
+
+  socket.on("join_user", (userId) => {
+    socket.join(`user_${userId}`);
+    console.log(`User ${userId} joined room`);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected:", socket.id);
+  });
+});
+export { io };
+
+
 app.use(morgan("dev"));
 app.use(express.json());
 
@@ -34,6 +67,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/order-items", orderItemRoutes);
 app.use("/api/transactions", transactionRoutes);
+app.use("/api/rnf", RNF);
 //goggle
 app.use(
   session({
