@@ -1,0 +1,99 @@
+{
+  "info": {
+    "name": "User API Test",
+    "_postman_id": "c9d7c6f0-f28e-47a0-8bbd-1b20c3d6e0c9",
+    "description": "Collection test API Người dùng (Đăng ký, Đăng nhập, Quản lý, Khóa tài khoản)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1️⃣ Register User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Minh Hoang\",\n    \"email\": \"user1@test.com\",\n    \"password\": \"123456\",\n    \"phone\": \"0909123456\",\n    \"countryside\": \"Da Nang\"\n}"
+        },
+        "url": { "raw": "http://localhost:5000/api/users/register", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "register"] }
+      }
+    },
+    {
+      "name": "2️⃣ Login User (Đúng mật khẩu)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"user1@test.com\",\n    \"password\": \"123456\"\n}"
+        },
+        "url": { "raw": "http://localhost:5000/api/users/login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "login"] }
+      }
+    },
+    {
+      "name": "3️⃣ Login Sai Mật Khẩu (Test khóa tài khoản)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"user1@test.com\",\n    \"password\": \"sai_mat_khau\"\n}"
+        },
+        "url": { "raw": "http://localhost:5000/api/users/login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "login"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Lặp lại 5 lần request này để test khóa tài khoản",
+              "pm.test('Kiểm tra nếu tài khoản bị khóa', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([401, 403]);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4️⃣ Get All Users (Admin)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "http://localhost:5000/api/users", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users"] }
+      }
+    },
+    {
+      "name": "5️⃣ Update User Info",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"User Updated\",\n    \"phone\": \"0909555666\"\n}"
+        },
+        "url": { "raw": "http://localhost:5000/api/users/1", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "1"] }
+      }
+    },
+    {
+      "name": "6️⃣ Delete User (Admin)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "http://localhost:5000/api/users/1", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "1"] }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "token", "value": "" }
+  ]
+}

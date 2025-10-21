@@ -1,0 +1,140 @@
+
+{
+  "info": {
+    "name": "Event Management API",
+    "_postman_id": "e7b7b1e2-1a74-48d8-9b6a-44e07d6a6c72",
+    "description": "Postman collection to test CRUD APIs for Categories, Locations, and Events on Express backend.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get all categories",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/categories"
+          }
+        },
+        {
+          "name": "Create category",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Music\",\n  \"description\": \"Live music events and concerts\"\n}"
+            },
+            "url": "{{base_url}}/categories"
+          }
+        },
+        {
+          "name": "Update category",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Sports\",\n  \"description\": \"Updated description for category\"\n}"
+            },
+            "url": "{{base_url}}/categories/1"
+          }
+        },
+        {
+          "name": "Delete category",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/categories/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Locations",
+      "item": [
+        {
+          "name": "Get all locations",
+          "request": { "method": "GET", "url": "{{base_url}}/locations" }
+        },
+        {
+          "name": "Create location",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Hanoi Stadium\",\n  \"address\": \"123 Nguyen Trai\",\n  \"city\": \"Hanoi\",\n  \"province\": \"Hanoi\",\n  \"capacity\": 30000,\n  \"map_link\": \"https://goo.gl/maps/abc123\"\n}"
+            },
+            "url": "{{base_url}}/locations"
+          }
+        },
+        {
+          "name": "Update location",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Saigon Stadium\",\n  \"city\": \"HCM\",\n  \"capacity\": 35000\n}"
+            },
+            "url": "{{base_url}}/locations/1"
+          }
+        },
+        {
+          "name": "Delete location",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/locations/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Get all events",
+          "request": { "method": "GET", "url": "{{base_url}}/events" }
+        },
+        {
+          "name": "Create event",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organizer_id\": 1,\n  \"name\": \"Rock Festival 2025\",\n  \"description\": \"Annual rock music event\",\n  \"category_id\": 1,\n  \"location_id\": 1,\n  \"start_date\": \"2025-12-01\",\n  \"end_date\": \"2025-12-02\",\n  \"cover_image\": \"https://example.com/rock.jpg\",\n  \"status\": \"upcoming\"\n}"
+            },
+            "url": "{{base_url}}/events"
+          }
+        },
+        {
+          "name": "Update event",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Rock Festival 2025 Updated\",\n  \"status\": \"completed\"\n}"
+            },
+            "url": "{{base_url}}/events/1"
+          }
+        },
+        {
+          "name": "Delete event",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/events/1"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000/api"
+    }
+  ]
+}

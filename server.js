@@ -1,9 +1,15 @@
 import express from "express";
 import dotenv from "dotenv";
 import cloudinary from "./src/config/cloudinary.js";
+import session from "express-session";
+import passport from "./src/config/passport.js";
+import authRoutes from "./src/router/auth.js";
 import uploadRoute from './src/router/uploadRoute.js';
 import userRoute from "./src/router/userRoute.js";
 import db from "./src/config/db.js";
+import categoryRoutes from "./src/router/categoryRoutes.js";
+import locationRoutes from "./src/router/locationRoutes.js";
+import eventRoutes from "./src/router/eventRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -13,6 +19,24 @@ app.use(express.json());
 app.use('/api', uploadRoute);
 //user
 app.use("/api", userRoute);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/locations", locationRoutes);
+app.use("/api/events", eventRoutes);
+//goggle
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use("/auth", authRoutes);
+app.get("/", (req, res) => {
+  res.send("✅ API chạy OK");
+});
 
 
 ////////////////////////////////////////////

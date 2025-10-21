@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Âm nhạc",
+    "description": "Các sự kiện về ca nhạc, biểu diễn, concert."
+  },
+  {
+    "name": "Thể thao",
+    "description": "Giải đấu, marathon, bóng đá và các hoạt động thể thao."
+  },
+  {
+    "name": "Hội thảo",
+    "description": "Các sự kiện chia sẻ kiến thức, tọa đàm, workshop."
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Nhà hát Hòa Bình",
+    "address": "240 Đ. 3 Tháng 2, Phường 12, Quận 10",
+    "city": "TP. Hồ Chí Minh",
+    "province": "Hồ Chí Minh",
+    "capacity": 2500,
+    "map_link": "https://maps.google.com/?q=Nhà+hát+Hòa+Bình"
+  },
+  {
+    "name": "Sân vận động Mỹ Đình",
+    "address": "Lê Đức Thọ, Nam Từ Liêm",
+    "city": "Hà Nội",
+    "province": "Hà Nội",
+    "capacity": 40000,
+    "map_link": "https://maps.google.com/?q=Sân+vận+động+Mỹ+Đình"
+  },
+  {
+    "name": "Trung tâm Hội nghị GEM Center",
+    "address": "8 Nguyễn Bỉnh Khiêm, Quận 1",
+    "city": "TP. Hồ Chí Minh",
+    "province": "Hồ Chí Minh",
+    "capacity": 1500,
+    "map_link": "https://maps.google.com/?q=GEM+Center"
+  }
+]
