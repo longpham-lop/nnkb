@@ -1,0 +1,92 @@
+{
+  "info": {
+    "name": "OrderItems CRUD",
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-1234567890ff",
+    "description": "Test CRUD API for order_items table (Express + Cloudinary + QR)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Order Items",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/order-items",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "order-items"]
+        }
+      }
+    },
+    {
+      "name": "Get Order Item by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/order-items/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "order-items", "1"]
+        }
+      }
+    },
+    {
+      "name": "Create Order Item",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"order_id\": 1,\n  \"ticket_id\": 2,\n  \"quantity\": 2,\n  \"unit_price\": 250000\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/order-items",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "order-items"]
+        }
+      }
+    },
+    {
+      "name": "Update Order Item",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"quantity\": 3,\n  \"checked_in\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/order-items/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "order-items", "1"]
+        }
+      }
+    },
+    {
+      "name": "Delete Order Item",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/order-items/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "order-items", "1"]
+        }
+      }
+    }
+  ]
+}
