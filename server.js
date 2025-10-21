@@ -14,6 +14,7 @@ import ticketRoutes from "./src/router/ticketRoutes.js";
 import orderRoutes from "./src/router/orderRoutes.js";
 import paymentRoutes from "./src/router/paymentRoutes.js";
 import orderItemRoutes from "./src/router/orderItemRoutes.js";
+import transactionRoutes from "./src/router/transactionRoutes.js";
 import morgan from "morgan";
 
 dotenv.config();
@@ -32,6 +33,7 @@ app.use("/api/tickets", ticketRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/order-items", orderItemRoutes);
+app.use("/api/transactions", transactionRoutes);
 //goggle
 app.use(
   session({

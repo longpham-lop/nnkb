@@ -1,0 +1,71 @@
+{
+  "info": {
+    "name": "Transactions CRUD API",
+    "_postman_id": "transactions-crud-collection",
+    "description": "API test CRUD cho b\u1ea3ng Transactions (sender_id, receiver_id, amount).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Transactions",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/transactions"
+      }
+    },
+    {
+      "name": "Get Transaction By ID",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/transactions/1"
+      }
+    },
+    {
+      "name": "Create Transaction",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sender_id\": 1,\n  \"receiver_id\": 2,\n  \"amount\": 500000\n}"
+        },
+        "url": "{{base_url}}/api/transactions"
+      }
+    },
+    {
+      "name": "Update Transaction",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"amount\": 750000\n}"
+        },
+        "url": "{{base_url}}/api/transactions/1"
+      }
+    },
+    {
+      "name": "Delete Transaction",
+      "request": {
+        "method": "DELETE",
+        "url": "{{base_url}}/api/transactions/1"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000"
+    }
+  ]
+}
