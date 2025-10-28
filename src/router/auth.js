@@ -10,19 +10,27 @@ router.get(
 
 router.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/auth/failed" }),
+  passport.authenticate("google", {
+    failureRedirect: "http://localhost:5173/login",
+    session: false,
+  }),
   (req, res) => {
     const { token, user } = req.user;
-    res.json({
-      message: "Đăng nhập Google thành công",
-      token,
-      user,
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
     });
+
+    res.redirect("http://localhost:5173/auth/google/callback");
   }
 );
 
 router.get("/failed", (req, res) => {
   res.status(401).json({ error: "Đăng nhập thất bại" });
 });
+
+
 
 export default router;

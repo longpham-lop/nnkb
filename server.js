@@ -7,6 +7,8 @@ import authRoutes from "./src/router/auth.js";
 import uploadRoute from './src/router/uploadRoute.js';
 import userRoute from "./src/router/userRoute.js";
 import db from "./src/config/db.js";
+import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 
 import http from "http";
 import { Server } from "socket.io";
@@ -51,7 +53,7 @@ io.on("connection", (socket) => {
 });
 export { io };
 
-
+app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(express.json());
 
@@ -77,12 +79,31 @@ app.use(
   })
 );
 
+app.get("/auth/me", (req, res) => {
+  const token = req.cookies.token; // ✅ lấy từ cookie
+
+  if (!token) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    res.json({
+      user: decoded,
+    });
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/auth", authRoutes);
 app.get("/", (req, res) => {
   res.send("✅ API chạy OK");
 });
+
 
 
 ////////////////////////////////////////////

@@ -1,6 +1,6 @@
 import Notification from "../models/Notification.js";
 import User from "../models/User.js";
-import { io } from "../server.js";
+import { io } from "../../server.js";
 
 export const getAllNotifications = async (req, res) => {
   try {

@@ -1,4 +1,4 @@
-// routes/eventRoutes.js
+
 import express from "express";
 import {
   getAllEvents,
