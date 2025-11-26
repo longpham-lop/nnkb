@@ -26,19 +26,45 @@ import orderItemRoutes from "./src/router/orderItemRoutes.js";
 import transactionRoutes from "./src/router/transactionRoutes.js";
 import RNF from "./src/router/R_N_F.js"
 import morgan from "morgan";
-
-
-
+import logger from "./src/middlewares/logger.js";
+import blockIP from "./src/middlewares/blockIP.js";
+import limiter from "./src/middlewares/rateLimit.js";
+import dbLogger from "./src/middlewares/dblogger.js";
+import blockip from "./src/router/blockedIP.js";
+import requestLogRouter from "./src/router/requestLog.js";
+import "./src/jobs/cleanLogs.js";
+import paymentRouter from './src/router/payment.js';
+import blockTicketRoutes from "./src/router/blockTicket.routes.js";
 
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://nnkb-fe-iota.vercel.app",
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Cho phép request không có origin (Postman, mobile app...)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+}));
+
+app.set("trust proxy", true);
+
 // Kích hoạt Socket.IO
 const io = new Server(server, {
   cors: { origin: "*" },
 });
-app.use(cors());
 io.on("connection", (socket) => {
   console.log("Client connected:", socket.id);
 
@@ -57,9 +83,16 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(express.json());
 
+// app.use(logger); bbbaatj lên sau 
+app.use(blockIP);
+app.use(limiter);
+// app.use(dbLogger);
+
 app.use('/api', uploadRoute);
 //user
 app.use("/api", userRoute);
+app.use("/api/blocked-ips", blockip);
+app.use("/api/request-logs", requestLogRouter);
 //etc...
 app.use("/api/categories", categoryRoutes);
 app.use("/api/locations", locationRoutes);
@@ -69,6 +102,8 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/order-items", orderItemRoutes);
 app.use("/api/transactions", transactionRoutes);
+app.use('/payment', paymentRouter);
+app.use("/api/block-tickets", blockTicketRoutes);
 app.use("/api/rnf", RNF);
 //goggle
 app.use(
@@ -133,6 +168,7 @@ app.get("/api/test-cloud", async (req, res) => {
 
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
 });

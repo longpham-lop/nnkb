@@ -11,7 +11,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:5173/login",
+    failureRedirect: "https://nnkb-fe-iota.vercel.app/login",
     session: false,
   }),
   (req, res) => {
@@ -23,7 +23,7 @@ router.get(
       sameSite: "lax",
     });
 
-    res.redirect("http://localhost:5173/auth/google/callback");
+    res.redirect("https://nnkb-fe-iota.vercel.app/auth/google/callback");
   }
 );
 

@@ -14,7 +14,7 @@ router.post("/users/register", register);
 router.post("/users/login", login);
 
 router.get("/users", authMiddleware, isAdmin, getAllUsers);
-router.put("/users/:id", authMiddleware, updateUser);
+router.put("/users/:id", updateUser);
 router.delete("/users/:id", authMiddleware, isAdmin, deleteUser);
 
 export default router;
