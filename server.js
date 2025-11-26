@@ -35,7 +35,7 @@ import requestLogRouter from "./src/router/requestLog.js";
 import "./src/jobs/cleanLogs.js";
 import paymentRouter from './src/router/payment.js';
 import blockTicketRoutes from "./src/router/blockTicket.routes.js";
-import syncEventsToMeili from "./services/meilisearchService.js";
+import syncEventsToMeili from "./src/services/meilisearchService.js";
 
 dotenv.config();
 const app = express();
