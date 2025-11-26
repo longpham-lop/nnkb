@@ -35,6 +35,7 @@ import requestLogRouter from "./src/router/requestLog.js";
 import "./src/jobs/cleanLogs.js";
 import paymentRouter from './src/router/payment.js';
 import blockTicketRoutes from "./src/router/blockTicket.routes.js";
+import syncEventsToMeili from "./services/meilisearchService.js";
 
 dotenv.config();
 const app = express();
@@ -164,6 +165,16 @@ app.get("/api/test-cloud", async (req, res) => {
     } catch (error) {
         console.error("❌ DB connection error:", error);
     }
+})();
+// Chạy sync Meilisearch khi backend start
+(async () => {
+  try {
+    console.log("🔄 Syncing events to Meilisearch...");
+    await syncEventsToMeili();
+    console.log("✅ Meilisearch index rebuilt from DB");
+  } catch (err) {
+    console.error("❌ Failed to rebuild Meilisearch index:", err);
+  }
 })();
 
 

@@ -4,6 +4,7 @@ import User from "../models/User.js";
 import Category from "../models/Category.js";
 import Location from "../models/Location.js";
 import client from "../config/meilisearch.js";
+import syncEventsToMeili from '../services/meilisearchService.js';
 
 const index = client.index("events");
 
@@ -49,6 +50,13 @@ export const getEventById = async (req, res) => {
 export const createEvent = async (req, res) => {
   try {
     const event = await Event.create(req.body);
+
+
+
+
+
+
+    
     const full = await Event.findByPk(event.id, {
       include: [User, Category, Location],
     });
