@@ -1,5 +1,9 @@
 import client from '../config/meilisearch.js';
-import { Event, User, Category, Location } from '../models/index.js';
+import Event from "../models/Event.js";
+import User from "../models/User.js";
+import Category from "../models/Category.js";
+import Location from "../models/Location.js";
+
 
 const syncEventsToMeili = async () => {
   try {
