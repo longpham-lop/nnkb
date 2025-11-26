@@ -9,6 +9,12 @@ const BlockTicket = sequelize.define("BlockTicket", {
     primaryKey: true,
     autoIncrement: true,
   },
+  ticket_unique_id:{
+    type: DataTypes.INTEGER,
+    allowNull: false,},
+  token_id:{
+    type: DataTypes.INTEGER,
+    allowNull: false,},
   order_id: {
     type: DataTypes.INTEGER,
     allowNull: false,

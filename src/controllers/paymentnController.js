@@ -91,9 +91,9 @@ export const vnpayReturn = (req, res) => {
 
     if (secureHash === signed) {
         if (vnp_Params['vnp_ResponseCode'] === '00') {
-            return res.redirect(`${frontendUrl}/done?status=success&orderId=${vnp_Params['vnp_TxnRef']}&code=00`);
+            return res.redirect(`${frontendUrl}/chonve?status=success&orderId=${vnp_Params['vnp_TxnRef']}&code=00`);
         } else {
-            return res.redirect(`${frontendUrl}/done?status=failed&code=${vnp_Params['vnp_ResponseCode']}`);
+            return res.redirect(`${frontendUrl}/chonve?status=failed&code=${vnp_Params['vnp_ResponseCode']}`);
         }
     } else {
         return res.redirect(`${frontendUrl}/payticket`);

@@ -8,6 +8,8 @@ export const createBlockTicket = async (req, res) => {
 
     ticketsInput.forEach(ticket => {
       const {
+        ticket_unique_id,
+        token_id,
         order_id,
         ticket_id,
         quantity = 1, 
@@ -18,6 +20,8 @@ export const createBlockTicket = async (req, res) => {
 
       for (let i = 0; i < quantity; i++) {
         ticketsToCreate.push({
+          ticket_unique_id,
+          token_id,
           order_id,
           ticket_id,
           unit_price,
