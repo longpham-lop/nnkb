@@ -48,3 +48,4 @@ passport.use(
 
 // Không cần serialize/deserialize nếu session: false
 export const passportInstance = passport;
+export default passport;
