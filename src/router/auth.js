@@ -25,16 +25,8 @@ router.get("/google/callback", (req, res, next) => {
 
     const { token, user } = data;
 
-    // Set cookie JWT
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: "true",
-      sameSite: "none",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-    
+    return res.redirect(`https://nnkb-fe-iota.vercel.app/auth/google/callback?token=${token}`);
 
-    return res.redirect("https://nnkb-fe-iota.vercel.app/auth/google/callback");
   })(req, res, next);
 });
 
