@@ -1,8 +1,3 @@
-import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import NguoiDung from "../models/User.js";
-import jwt from "jsonwebtoken";
-
 passport.use(
   new GoogleStrategy(
     {
@@ -33,15 +28,10 @@ passport.use(
           { expiresIn: "7d" }
         );
 
-        done(null, { user, token });
+        done(null, { user: user.toJSON(), token }); // ✅ Convert plain object
       } catch (err) {
         done(err, null);
       }
     }
   )
 );
-
-passport.serializeUser((data, done) => done(null, data));
-passport.deserializeUser((obj, done) => done(null, obj));
-
-export default passport;
