@@ -1,7 +1,8 @@
+// /config/passport.js
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import NguoiDung from "../models/User.js";
 import jwt from "jsonwebtoken";
+import NguoiDung from "../models/User.js";
 
 passport.use(
   new GoogleStrategy(
@@ -12,6 +13,8 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
+        console.log("✅ Google profile:", profile);
+
         const email = profile.emails?.[0]?.value;
         const name = profile.displayName;
         const avatar = profile.photos?.[0]?.value;
@@ -33,14 +36,15 @@ passport.use(
           { expiresIn: "7d" }
         );
 
-        done(null, { user: user.toJSON(), token }); // ✅ Convert plain object
+        // ✅ Convert Sequelize instance sang plain object
+        done(null, { user: user.toJSON(), token });
       } catch (err) {
+        console.log("❌ Google strategy error:", err);
         done(err, null);
       }
     }
   )
 );
 
-
-
-export default passport;
+// Không cần serialize/deserialize nếu session: false
+export const passportInstance = passport;

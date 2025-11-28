@@ -1,17 +1,19 @@
 import express from "express";
-import passport from "../config/passport.js";
+import { passportInstance } from "../config/passport.js";
 
 const router = express.Router();
 
+// Step 1: redirect user tới Google login
 router.get("/google", 
-  passport.authenticate("google", { 
+  passportInstance.authenticate("google", { 
     scope: ["profile", "email"], 
     prompt: "select_account" 
   })
 );
 
+// Step 2: callback từ Google
 router.get("/google/callback", (req, res, next) => {
-  passport.authenticate("google", { session: false }, (err, data, info) => {
+  passportInstance.authenticate("google", { session: false }, (err, data, info) => {
     console.log("✅ OAuth callback triggered");
     console.log("❌ Error:", err);
     console.log("ℹ️ Info:", info);
@@ -23,9 +25,10 @@ router.get("/google/callback", (req, res, next) => {
 
     const { token, user } = data;
 
+    // Set cookie JWT
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
     });
 
@@ -33,6 +36,7 @@ router.get("/google/callback", (req, res, next) => {
   })(req, res, next);
 });
 
+// Route thất bại (dùng khi muốn trả JSON)
 router.get("/failed", (req, res) => {
   res.status(401).json({ error: "Đăng nhập thất bại" });
 });
