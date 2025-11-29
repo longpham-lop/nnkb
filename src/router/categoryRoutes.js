@@ -1,4 +1,5 @@
 import express from "express";
+import { verifyToken, isAdmin } from "../middlewares/authMiddleware.js";
 import {
   getAllCategories,
   getCategoryById,
@@ -9,10 +10,10 @@ import {
 
 const router = express.Router();
 
-router.get("/", getAllCategories);
-router.get("/:id", getCategoryById);
-router.post("/", createCategory);
-router.put("/:id", updateCategory);
-router.delete("/:id", deleteCategory);
+router.get("/",verifyToken, getAllCategories);
+router.get("/:id",verifyToken, getCategoryById);
+router.post("/",verifyToken, createCategory);
+router.put("/:id",verifyToken, updateCategory);
+router.delete("/:id",verifyToken, deleteCategory);
 
 export default router;

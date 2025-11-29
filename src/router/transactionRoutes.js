@@ -1,4 +1,5 @@
 import express from "express";
+import { verifyToken, isAdmin } from "../middlewares/authMiddleware.js";
 import {
   getAllTransactions,
   getTransactionById,
@@ -9,10 +10,10 @@ import {
 
 const router = express.Router();
 
-router.get("/", getAllTransactions);
-router.get("/:id", getTransactionById);
-router.post("/", createTransaction);
-router.put("/:id", updateTransaction);
-router.delete("/:id", deleteTransaction);
+router.get("/",verifyToken, getAllTransactions);
+router.get("/:id",verifyToken, getTransactionById);
+router.post("/",verifyToken, createTransaction);
+router.put("/:id",verifyToken, updateTransaction);
+router.delete("/:id",verifyToken, deleteTransaction);
 
 export default router;

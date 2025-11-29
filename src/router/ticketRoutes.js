@@ -1,4 +1,5 @@
 import express from "express";
+import { verifyToken, isAdmin } from "../middlewares/authMiddleware.js";
 import {
   getAllTickets,
   getTicketById,
@@ -9,10 +10,10 @@ import {
 
 const router = express.Router();
 
-router.get("/", getAllTickets);
-router.get("/:id", getTicketById);
-router.post("/", createTicket);
-router.put("/:id", updateTicket);
-router.delete("/:id", deleteTicket);
+router.get("/",verifyToken, getAllTickets);
+router.get("/:id",verifyToken, getTicketById);
+router.post("/", verifyToken,createTicket);
+router.put("/:id",verifyToken, updateTicket);
+router.delete("/:id",verifyToken, isAdmin, deleteTicket);
 
 export default router;

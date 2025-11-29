@@ -1,4 +1,5 @@
 import express from "express";
+import { verifyToken, isAdmin } from "../middlewares/authMiddleware.js";
 import {
   getAllPayments,
   createPayment,
@@ -8,9 +9,9 @@ import {
 
 const router = express.Router();
 
-router.get("/", getAllPayments);
-router.post("/", createPayment);
-router.put("/:id", updatePayment);
-router.delete("/:id", deletePayment);
+router.get("/",verifyToken, getAllPayments);
+router.post("/",verifyToken,createPayment);
+router.put("/:id",verifyToken, updatePayment);
+router.delete("/:id",verifyToken, deletePayment);
 
 export default router;

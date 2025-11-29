@@ -1,4 +1,4 @@
-
+import { verifyToken, isAdmin } from "../middlewares/authMiddleware.js";
 import express from "express";
 import {
   getAllEvents,
@@ -11,11 +11,11 @@ import {
 
 const router = express.Router();
 
-router.get("/", getAllEvents);
-router.get("/search", searchEvents);
-router.get("/:id", getEventById);
-router.post("/", createEvent);
-router.put("/:id", updateEvent);
-router.delete("/:id", deleteEvent);
+router.get("/",verifyToken, getAllEvents);
+router.get("/search",verifyToken, searchEvents);
+router.get("/:id",verifyToken, getEventById);
+router.post("/",verifyToken, createEvent);
+router.put("/:id",verifyToken, updateEvent);
+router.delete("/:id",verifyToken, deleteEvent);
 
 export default router;

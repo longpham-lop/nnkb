@@ -87,7 +87,7 @@ export const vnpayReturn = (req, res) => {
     let hmac = crypto.createHmac("sha512", secretKey);
     let signed = hmac.update(new Buffer.from(signData, 'utf-8')).digest("hex");
 
-    const frontendUrl = 'http://localhost:5173';
+    const frontendUrl = 'https://nnkb-fe-iota.vercel.app';
 
     if (secureHash === signed) {
         if (vnp_Params['vnp_ResponseCode'] === '00') {
