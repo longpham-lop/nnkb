@@ -1,5 +1,6 @@
 import Ticket from "../models/Ticket.js";
 import Event from "../models/Event.js";
+import { io } from '../../server.js';
 
 export const getAllTickets = async (req, res) => {
   try {
@@ -87,6 +88,18 @@ export const buyTicket = async (req, res) => {
     ticket.quantity -= amount;
     ticket.sold += amount;
     await ticket.save();
+
+    console.log(`[REALTIME] Emit ticketUpdate:`, {
+      ticketId,
+      quantitySold: quantity,
+      remaining: ticket.quantity - ticket.sold
+    });
+
+    io.emit('ticketUpdate', {
+      ticketId,
+      quantitySold: quantity,
+      remaining: ticket.quantity - ticket.sold
+    });
 
     res.json({ success: true, message: 'Mua vé thành công', ticket });
   } catch (err) {
