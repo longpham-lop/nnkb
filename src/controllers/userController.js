@@ -95,6 +95,33 @@ export const updateUser = async (req, res) => {
   }
 };
 
+
+export const updateMyProfile = async (req, res) => {
+  try {
+    const userId = req.user.id; 
+
+    const { name, phone, countryside, avatar_url } = req.body;
+
+    const user = await User.findByPk(userId);
+    if (!user) return res.status(404).json({ message: "User không tồn tại" });
+
+    await user.update({
+      name: name || user.name,
+      phone: phone || user.phone,
+      countryside: countryside || user.countryside,
+      avatar_url: avatar_url || user.avatar_url,
+    });
+
+    return res.json({
+      success: true,
+      message: "Cập nhật thông tin thành công",
+      data: user,
+    });
+  } catch (err) {
+    return res.status(500).json({ message: "Lỗi server", error: err.message });
+  }
+};
+
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -102,5 +129,54 @@ export const deleteUser = async (req, res) => {
     res.json({ success: true, message: "Đã xóa người dùng" });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+export const changePassword = async (req, res) => {
+  try {
+    const userId = req.user.id; // 🔒 chống IDOR — chỉ đổi mật khẩu của chính mình
+
+    const { old_password, new_password } = req.body;
+
+    if (!old_password || !new_password) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Vui lòng nhập đầy đủ mật khẩu cũ và mật khẩu mới" 
+      });
+    }
+
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "User không tồn tại" 
+      });
+    }
+
+    // So sánh mật khẩu cũ
+    const isMatch = await bcrypt.compare(old_password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Mật khẩu cũ không đúng" 
+      });
+    }
+
+    // Hash mật khẩu mới
+    const hashedNewPassword = await bcrypt.hash(new_password, 10);
+
+    await user.update({ password: hashedNewPassword });
+
+    return res.json({
+      success: true,
+      message: "Đổi mật khẩu thành công"
+    });
+
+  } catch (err) {
+    return res.status(500).json({ 
+      success: false,
+      message: "Lỗi server", 
+      error: err.message 
+    });
   }
 };
