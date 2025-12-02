@@ -91,14 +91,14 @@ export const buyTicket = async (req, res) => {
 
     console.log(`[REALTIME] Emit ticketUpdate:`, {
       ticketId,
-      quantitySold: quantity,
-      remaining: ticket.quantity - ticket.sold
+      quantitySold: amount,        // số vé vừa mua
+      remaining: ticket.quantity   // số vé còn lại sau khi trừ
     });
 
     io.emit('ticketUpdate', {
       ticketId,
-      quantitySold: quantity,
-      remaining: ticket.quantity - ticket.sold
+      quantitySold: amount,
+      remaining: ticket.quantity
     });
 
     res.json({ success: true, message: 'Mua vé thành công', ticket });
