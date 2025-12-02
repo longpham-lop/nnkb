@@ -10,7 +10,7 @@ import {
 } from "../controllers/ticketController.js";
 
 const router = express.Router();
-
+ 
 router.get("/",verifyToken, getAllTickets);
 router.get("/:id",verifyToken, getTicketById);
 router.post("/", verifyToken,createTicket);
