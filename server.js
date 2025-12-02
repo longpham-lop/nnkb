@@ -66,16 +66,22 @@ app.set("trust proxy", true);
 const io = new Server(server, {
   cors: { origin: "*" },
 });
-io.on("connection", (socket) => {
-  console.log("Client connected:", socket.id);
+const onlineUsers = new Set();
 
-  socket.on("join_user", (userId) => {
-    socket.join(`user_${userId}`);
-    console.log(`User ${userId} joined room`);
-  });
+io.on("connection", (socket) => {
+  onlineUsers.add(socket.id);
+
+  // Emit số người online cho tất cả FE
+  io.emit("online_count", onlineUsers.size);
+
+  console.log("Client connected:", socket.id, "Online:", onlineUsers.size);
 
   socket.on("disconnect", () => {
-    console.log("Client disconnected:", socket.id);
+    onlineUsers.delete(socket.id);
+
+    io.emit("online_count", onlineUsers.size);
+
+    console.log("Client disconnected:", socket.id, "Online:", onlineUsers.size);
   });
 });
 export { io };
