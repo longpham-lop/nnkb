@@ -21,6 +21,6 @@ router.put("/users/:id",verifyToken, updateUser);
 router.put("/me",verifyToken,updateMyProfile);
 router.delete("/users/:id", verifyToken, isAdmin, deleteUser);
 
-router.put("/change-password", authMiddleware, changePassword);
+router.put("/change-password", verifyToken, changePassword);
 
 export default router;
