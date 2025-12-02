@@ -68,3 +68,29 @@ export const deleteTicket = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+export const buyTicket = async (req, res) => {
+  try {
+    const { ticketId, amount } = req.body; 
+    if (!ticketId || !amount || amount <= 0) {
+      return res.status(400).json({ error: 'Thông tin mua vé không hợp lệ' });
+    }
+
+    const ticket = await Ticket.findByPk(ticketId);
+    if (!ticket) return res.status(404).json({ error: 'Vé không tồn tại' });
+
+    if (ticket.quantity < amount) {
+      return res.status(400).json({ error: 'Số vé còn lại không đủ' });
+    }
+
+    ticket.quantity -= amount;
+    ticket.sold += amount;
+    await ticket.save();
+
+    res.json({ success: true, message: 'Mua vé thành công', ticket });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Lỗi server', details: err.message });
+  }
+};

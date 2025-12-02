@@ -6,6 +6,7 @@ import {
   createTicket,
   updateTicket,
   deleteTicket,
+  buyTicket
 } from "../controllers/ticketController.js";
 
 const router = express.Router();
@@ -15,5 +16,7 @@ router.get("/:id",verifyToken, getTicketById);
 router.post("/", verifyToken,createTicket);
 router.put("/:id",verifyToken, updateTicket);
 router.delete("/:id",verifyToken, isAdmin, deleteTicket);
+
+router.put('/buy', verifyToken, buyTicket);
 
 export default router;
