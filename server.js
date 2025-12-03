@@ -90,10 +90,10 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(express.json());
 
-// app.use(logger); bbbaatj lên sau 
+app.use(logger);// bbbaatj lên sau 
 app.use(blockIP);
 app.use(limiter);
-// app.use(dbLogger);
+app.use(dbLogger);
 
 app.use('/api', uploadRoute);
 //user
